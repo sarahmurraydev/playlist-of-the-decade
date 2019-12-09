@@ -1,23 +1,24 @@
-var express = require('express');
-var request = require('request');
-var cors = require('cors');
-var querystring = require('querystring');
-var cookieParser = require('cookie-parser');
-var dotenv = require('dotenv');
-dotenv.config();
+const express = require('express');
+const request = require('request');
+const cors = require('cors');
+const querystring = require('querystring');
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
+const app = express();
 
-console.log("here we are")
 // Controllers
-var login = require('./routes/login')
+var login = require('./controllers/login')
 
-var app = express();
+// MiddleWare
+dotenv.config();
+app.use(cors());
+app.use(cookieParser());
 
-app.use(express.static(_dirname + '/public'))
-    .use(cors())
-    .use(cookieParser());
+// Routes
+app.get('/', (req, res) => res.send("Hello Worlds"))
 
-app.use('/login', login)
+app.get('/connect', (req, res) => res.redirect('http://localhost:3000'))
+// app.use('/login', login)
 
 
-console.log(`Listening on ${process.env.PORT}`);
-app.listen(process.env.PORT)
+app.listen(process.env.PORT, () => console.log(`Listening on ${process.env.PORT}`));
