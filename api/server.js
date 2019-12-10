@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 const app = express();
 
 // Controllers
-var login = require('./controllers/login')
+var loginRouter = require('./controllers/login');
 
 // MiddleWare
 dotenv.config();
@@ -18,7 +18,8 @@ app.use(cookieParser());
 app.get('/', (req, res) => res.send("Hello Worlds"))
 
 app.get('/connect', (req, res) => res.redirect('http://localhost:3000'))
-// app.use('/login', login)
+
+app.use('/api', loginRouter);
 
 
 app.listen(process.env.PORT, () => console.log(`Listening on ${process.env.PORT}`));
